@@ -1,0 +1,165 @@
+[
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_acl",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "patient",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "patientName",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "patientAddress",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "patientBirthday",
+                "type": "string"
+            }
+        ],
+        "name": "MedicalRecordAdded",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "previousOwner",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "patient",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "_patientName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_patientAddress",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_patientBirthday",
+                "type": "string"
+            }
+        ],
+        "name": "addMedicalRecord",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_patientAddress",
+                "type": "address"
+            }
+        ],
+        "name": "getMedicalRecords",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "patientName",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "patientAddress",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "patientBirthday",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "timestamp",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct MedicalRecords.MedicalRecord",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]
