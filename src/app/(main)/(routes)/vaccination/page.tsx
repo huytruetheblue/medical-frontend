@@ -1,40 +1,53 @@
 "use client";
 
-import { PatientInfo } from "@/_types_";
-
-import MedicalRecordContract from "@/contracts/MedicalRecordContract";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useAppSelector } from "@/reduxs/hooks";
+import MedicalRecordContract from "@/contracts/MedicalRecordContract";
 import React from "react";
+import { redirect } from "next/navigation";
+import { PatientInfo, VaccinationInfo } from "@/_types_";
+import VaccinationContract from "@/contracts/VaccinationContract";
 
-export default function Home() {
+const VaccinationPage = () => {
   const { web3Provider, wallet } = useAppSelector((state) => state.account);
   const [patientInfo, setPatientInfo] = React.useState<PatientInfo>();
-
-  const getPatientInfo = React.useCallback(async () => {
+  const [vaccination, setVaccination] = React.useState<VaccinationInfo[]>([]);
+  const getVaccination = React.useCallback(async () => {
     if (!web3Provider || !wallet) {
-      setPatientInfo(undefined);
-      return;
+      redirect("/");
     }
     const medicalRecordContract = new MedicalRecordContract(web3Provider);
     const patient: PatientInfo = await medicalRecordContract.getMedicalRecords(
       wallet.address
     );
     setPatientInfo(patient);
+
+    const vaccinationContract = new VaccinationContract(web3Provider);
+    const vaccin = await vaccinationContract.getVaccinHistory(wallet.address);
+    setVaccination(vaccin);
   }, [web3Provider, wallet]);
 
   React.useEffect(() => {
-    getPatientInfo();
-  }, [getPatientInfo]);
+    getVaccination();
+  }, [getVaccination]);
 
   return (
     <div>
       <div className="shadow-lg shadow-gray-500/50">
         <div className="px-4 sm:px-0">
           <h3 className="px-4 pt-4 text-base font-semibold leading-7 text-gray-900">
-            Personal page
+            Medical Examination History
           </h3>
           <p className="px-4 pb-4 mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-            Thông tin cá nhân của người dùng
+            Lịch sử Khám bệnh
           </p>
         </div>
       </div>
@@ -92,6 +105,32 @@ export default function Home() {
           </dl>
         </div>
       </div>
+      <br />
+      <div className="shadow-lg shadow-gray-500/50">
+        <Table>
+          <TableCaption className="pb-6">Lịch sử Tiêm chủng</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Tên vaccin</TableHead>
+              <TableHead>Liều lượng</TableHead>
+              <TableHead>Ngày tiêm chủng</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {vaccination?.map((vaccin: VaccinationInfo, i: number) => {
+              return (
+                <TableRow key={i}>
+                  <TableCell>{vaccin.vaccineName}</TableCell>
+                  <TableCell>{vaccin.vaccineAmount}</TableCell>
+                  <TableCell>{vaccin.date.toDateString()}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
-}
+};
+
+export default VaccinationPage;

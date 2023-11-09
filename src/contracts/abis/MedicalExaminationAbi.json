@@ -33,12 +33,6 @@
             },
             {
                 "indexed": false,
-                "internalType": "address",
-                "name": "medicalRecord",
-                "type": "address"
-            },
-            {
-                "indexed": false,
                 "internalType": "uint256",
                 "name": "timestamp",
                 "type": "uint256"
@@ -69,6 +63,11 @@
     {
         "inputs": [
             {
+                "internalType": "address",
+                "name": "patient",
+                "type": "address"
+            },
+            {
                 "internalType": "string",
                 "name": "_sympton",
                 "type": "string"
@@ -77,11 +76,6 @@
                 "internalType": "string",
                 "name": "_diagnostic",
                 "type": "string"
-            },
-            {
-                "internalType": "address",
-                "name": "_medicalRecord",
-                "type": "address"
             }
         ],
         "name": "addMedicalExamination",
@@ -97,7 +91,7 @@
                 "type": "address"
             }
         ],
-        "name": "getMedicalRecords",
+        "name": "getAllMedicalExaminations",
         "outputs": [
             {
                 "components": [
@@ -112,11 +106,6 @@
                         "type": "string"
                     },
                     {
-                        "internalType": "address",
-                        "name": "medicalRecord",
-                        "type": "address"
-                    },
-                    {
                         "internalType": "uint256",
                         "name": "timestamp",
                         "type": "uint256"
@@ -125,6 +114,47 @@
                 "internalType": "struct MedicalExaminations.MedicalExamination[]",
                 "name": "",
                 "type": "tuple[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_patientAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_index",
+                "type": "uint256"
+            }
+        ],
+        "name": "getMedicalExamination",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "sympton",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "diagnostic",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "timestamp",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct MedicalExaminations.MedicalExamination",
+                "name": "",
+                "type": "tuple"
             }
         ],
         "stateMutability": "view",

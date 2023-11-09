@@ -17,10 +17,9 @@ export interface TestInfo {
 export interface PatientInfo {
   patientName: string;
   patientAddress: string;
-  patientBirthday: Date;
-  patientGender: "Man" | "Woman" | undefined;
+  patientBirthday: string;
+  patientGender: "Nam" | "Nữ" | undefined;
   patientNumber: string;
-  createAt: Date;
 }
 
 export interface MedicalRecords {
@@ -32,9 +31,8 @@ export interface MedicalRecords {
 }
 
 export interface PrescriptionInfo {
-  medicineName: string[];
-  medicineAmount: string[];
-  date: Date;
+  medicineName: string;
+  medicineDosage: string;
 }
 
 export interface VaccinationInfo {

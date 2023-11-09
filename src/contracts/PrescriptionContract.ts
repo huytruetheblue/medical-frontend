@@ -35,15 +35,17 @@ export default class PrescriptionContract extends BaseInterface {
     return this._handleTransactionResponse(rs);
   };
 
-  getPrescription = async (address: String): Promise<PrescriptionInfo[]> => {
-    const rs = await this._contract.getPrescription(address);
+  getPrescription = async (
+    address: String,
+    index: Number
+  ): Promise<PrescriptionInfo[]> => {
+    const rs = await this._contract.getPrescription(address, index);
     const results: PrescriptionInfo[] = [];
-    for (let i = 0; i < rs.length; i += 1) {
-      const result = rs[i];
+
+    for (let i = 0; i < rs.medicalName.length; i += 1) {
       results.push({
-        medicineName: result.medicalName,
-        medicineAmount: result.amount,
-        date: new Date(result.timestamp * 1000),
+        medicineName: rs.medicalName[i],
+        medicineDosage: rs.dosage[i],
       });
     }
     return results;

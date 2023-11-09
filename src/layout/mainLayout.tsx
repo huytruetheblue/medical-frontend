@@ -12,20 +12,14 @@ import { ethers } from "ethers";
 import React, { ReactNode } from "react";
 import { menus } from "@/constants";
 import Link from "next/link";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@radix-ui/react-navigation-menu";
-import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+
 import { cn } from "@/lib/utils";
+import { IMenu } from "@/_types_";
+
 export function MainLayout({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
+  const [isOpenMenu, setIsOpenMenu] = React.useState<Boolean>(false);
   const { wallet } = useAppSelector((state) => state.account);
-
   const onConnectMetamask = async () => {
     if (window.ethereum) {
       const provider = new ethers.providers.Web3Provider(
@@ -51,40 +45,166 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="space-y-4 h-full w-full dark:bg-[#1E1F22] bg-[#E3E5E8] py-3">
-      <div>
-        <div className="w-full text-center uppercase text-3xl font-bold text-zinc-500 dark:text-secondary/70">
-          MEDICAL RECORD MANAGEMENT
-        </div>
-        <div className="absolute right-3 top-3">
-          {!wallet && <ConnectWallet onClick={onConnectMetamask} />}
-          {wallet && (
-            <WalletInfo
-              address={wallet?.address}
-              amount={wallet?.bnb || 0}
-              onClick={disconnectMetamask}
-            />
-          )}
-        </div>
-      </div>
-      <div className="flex justify-center">
-        <NavigationMenu>
-          <NavigationMenuList className="flex space-x-4">
-            {menus.map((menu) => (
-              // eslint-disable-next-line react/jsx-key
-              <NavigationMenuItem className="px-2">
-                <Link href={menu.url} legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    {menu.name}
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
-      </div>
+    <div className="space-y-4 h-full w-full dark:bg-[#1E1F22] bg-[#E3E5E8] ">
+      <div className="min-h-full">
+        <nav className="bg-gray-800">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex h-16 items-center justify-between">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <img
+                    className="h-8 w-8"
+                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    alt="Medical Manager"
+                  />
+                </div>
+                <div className="hidden md:block">
+                  <div className="ml-10 flex items-baseline space-x-4">
+                    {menus.map((menu: IMenu, i) => {
+                      return (
+                        <Link key={i} href={menu.url}>
+                          <div
+                            className={cn(
+                              "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-sm  font-medium md:text-base"
+                            )}>
+                            {menu.name}
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+              <div className="hidden md:block">
+                <div className="ml-4 flex items-center md:ml-6">
+                  <button
+                    type="button"
+                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <span className="absolute -inset-1.5"></span>
+                    <span className="sr-only">View notifications</span>
+                    <svg
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+                      />
+                    </svg>
+                  </button>
 
-      {children}
+                  <div className="relative ml-3">
+                    <div>
+                      <div className="flex-shrink-0">
+                        {!wallet && (
+                          <ConnectWallet onClick={onConnectMetamask} />
+                        )}
+                        {wallet && (
+                          <WalletInfo
+                            address={wallet?.address}
+                            amount={wallet?.bnb || 0}
+                            onClick={disconnectMetamask}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="-mr-2 flex md:hidden">
+                <button
+                  type="button"
+                  className="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  aria-controls="mobile-menu"
+                  aria-expanded="false"
+                  onClick={() => setIsOpenMenu(!isOpenMenu)}>
+                  <span className="absolute -inset-0.5"></span>
+                  <span className="sr-only">Open main menu</span>
+                  <svg
+                    className="block h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                    />
+                  </svg>
+                  <svg
+                    className="hidden h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          {isOpenMenu && (
+            <div className="md:hidden" id="mobile-menu">
+              <div className="border-t border-gray-700 pb-3 pt-4">
+                <div className="flex items-center px-5">
+                  {!wallet && (
+                    <ConnectWallet
+                      className="w-full"
+                      onClick={onConnectMetamask}
+                    />
+                  )}
+                  {wallet && (
+                    <WalletInfo
+                      className="w-full"
+                      address={wallet?.address}
+                      amount={wallet?.bnb || 0}
+                      onClick={disconnectMetamask}
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+                {menus.map((menu: IMenu, i) => {
+                  return (
+                    <Link key={i} href={menu.url}>
+                      <div
+                        className={cn(
+                          "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                        )}>
+                        {menu.name}
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </nav>
+
+        <header className="bg-white shadow">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+              Medical Record Management
+            </h1>
+          </div>
+        </header>
+        <main>
+          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+            {children}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

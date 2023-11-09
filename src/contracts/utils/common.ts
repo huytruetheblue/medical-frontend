@@ -30,9 +30,9 @@ export const SMART_ADDRESS = {
     56: "",
   },
   Prescription: { 97: "0xC437b9f7e3df84e9F21653a90F4805BaAd4E7Ba9", 56: "" },
-  MedicalRecord: { 97: "0xEF6a88169A950bbB28a0c076D63654532554609b", 56: "" },
+  MedicalRecord: { 97: "0x90B4dDf5aB9b04CCa724AA3F8B98480c8cDA9412", 56: "" },
   MedicalExamination: {
-    97: "0x46cC4A958F3744c3c81Dd831a184e2E062Aaa41c",
+    97: "0x6162dF2c206095B86c436034d13bf3f600594636",
     56: "",
   },
 };

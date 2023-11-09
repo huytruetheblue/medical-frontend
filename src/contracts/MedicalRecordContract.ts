@@ -42,10 +42,9 @@ export default class MedicalRecordContract extends BaseInterface {
     const result: PatientInfo = {
       patientName: rs.patientName,
       patientAddress: rs.patientAddress,
-      patientBirthday: rs.birthday,
-      patientGender: rs.gender,
-      patientNumber: rs.number,
-      createAt: new Date(rs.timestamp * 1000),
+      patientBirthday: rs.patientBirthday,
+      patientGender: rs.patientGender == 1 ? "Nam" : "Nữ",
+      patientNumber: rs.patientNumber,
     };
     return result;
   };

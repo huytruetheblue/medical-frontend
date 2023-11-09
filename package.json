@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ethersproject/abstract-provider": "5.7.0",
+    "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.3.2",
     "@nextui-org/react": "^2.2.6",
     "@radix-ui/react-accordion": "^1.1.2",

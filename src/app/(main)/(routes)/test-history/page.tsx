@@ -1,18 +1,29 @@
 "use client";
 
-import { PatientInfo } from "@/_types_";
-
-import MedicalRecordContract from "@/contracts/MedicalRecordContract";
-import { useAppSelector } from "@/reduxs/hooks";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import React from "react";
+import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/reduxs/hooks";
+import { PatientInfo, TestInfo } from "@/_types_";
+import TestHistoryContract from "@/contracts/TestHistoryContract";
+import MedicalRecordContract from "@/contracts/MedicalRecordContract";
 
-export default function Home() {
+const TestHistoryPage = () => {
   const { web3Provider, wallet } = useAppSelector((state) => state.account);
   const [patientInfo, setPatientInfo] = React.useState<PatientInfo>();
-
-  const getPatientInfo = React.useCallback(async () => {
+  const [testHistory, setTestHistory] = React.useState<TestInfo[]>([]);
+  const router = useRouter();
+  const getTestHistory = React.useCallback(async () => {
     if (!web3Provider || !wallet) {
-      setPatientInfo(undefined);
+      router.push("/");
       return;
     }
     const medicalRecordContract = new MedicalRecordContract(web3Provider);
@@ -20,21 +31,25 @@ export default function Home() {
       wallet.address
     );
     setPatientInfo(patient);
+
+    const testHistoryContract = new TestHistoryContract(web3Provider);
+    const test = await testHistoryContract.getTestHistory(wallet.address);
+    setTestHistory(test);
   }, [web3Provider, wallet]);
 
   React.useEffect(() => {
-    getPatientInfo();
-  }, [getPatientInfo]);
+    getTestHistory();
+  }, [getTestHistory]);
 
   return (
     <div>
       <div className="shadow-lg shadow-gray-500/50">
         <div className="px-4 sm:px-0">
           <h3 className="px-4 pt-4 text-base font-semibold leading-7 text-gray-900">
-            Personal page
+            Test History Page
           </h3>
           <p className="px-4 pb-4 mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-            Thông tin cá nhân của người dùng
+            Lịch sử tiêm chủng của người dùng
           </p>
         </div>
       </div>
@@ -92,6 +107,33 @@ export default function Home() {
           </dl>
         </div>
       </div>
+
+      <br />
+      <div className="shadow-lg shadow-gray-500/50">
+        <Table>
+          <TableCaption className="pb-6">Lịch sử Xét nghiệm</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Tên xét nghiệm</TableHead>
+              <TableHead>Kết quả</TableHead>
+              <TableHead>Ngày xét nghiệm</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {testHistory?.map((test: TestInfo, i: number) => {
+              return (
+                <TableRow key={i}>
+                  <TableCell>{test.testName}</TableCell>
+                  <TableCell>{test.testResult}</TableCell>
+                  <TableCell>{test.date.toDateString()}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
-}
+};
+
+export default TestHistoryPage;

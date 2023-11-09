@@ -1,18 +1,32 @@
 "use client";
 
-import { PatientInfo } from "@/_types_";
-
-import MedicalRecordContract from "@/contracts/MedicalRecordContract";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useAppSelector } from "@/reduxs/hooks";
+import MedicalRecordContract from "@/contracts/MedicalRecordContract";
 import React from "react";
+import { MedicalExamination, PatientInfo } from "@/_types_";
+import { redirect, useRouter } from "next/navigation";
+import MedicalExaminationContract from "@/contracts/MedicalExaminationContract";
 
-export default function Home() {
+const MedicalExaminationPage = () => {
   const { web3Provider, wallet } = useAppSelector((state) => state.account);
   const [patientInfo, setPatientInfo] = React.useState<PatientInfo>();
+  const [medicalExaminations, setMedicalExaminations] = React.useState<
+    MedicalExamination[]
+  >([]);
+  const router = useRouter();
 
-  const getPatientInfo = React.useCallback(async () => {
+  const getMedicalExaminations = React.useCallback(async () => {
     if (!web3Provider || !wallet) {
-      setPatientInfo(undefined);
+      router.push("/");
       return;
     }
     const medicalRecordContract = new MedicalRecordContract(web3Provider);
@@ -20,21 +34,30 @@ export default function Home() {
       wallet.address
     );
     setPatientInfo(patient);
+
+    const medicalExaminationContract = new MedicalExaminationContract(
+      web3Provider
+    );
+    const medicalExamination =
+      await medicalExaminationContract.getAllMedicalExaminations(
+        wallet.address
+      );
+    setMedicalExaminations(medicalExamination);
   }, [web3Provider, wallet]);
 
   React.useEffect(() => {
-    getPatientInfo();
-  }, [getPatientInfo]);
+    getMedicalExaminations();
+  }, [getMedicalExaminations]);
 
   return (
     <div>
       <div className="shadow-lg shadow-gray-500/50">
         <div className="px-4 sm:px-0">
           <h3 className="px-4 pt-4 text-base font-semibold leading-7 text-gray-900">
-            Personal page
+            Medical Examination History
           </h3>
           <p className="px-4 pb-4 mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-            Thông tin cá nhân của người dùng
+            Lịch sử Khám bệnh
           </p>
         </div>
       </div>
@@ -92,6 +115,36 @@ export default function Home() {
           </dl>
         </div>
       </div>
+      <br />
+      <div className="shadow-lg shadow-gray-500/50">
+        <Table>
+          <TableCaption className="pb-6">Thông tin khám bệnh</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Triệu chứng</TableHead>
+              <TableHead>Chuẩn đoán</TableHead>
+              <TableHead>Ngày khám</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {medicalExaminations?.map((medicalExamination, i) => {
+              return (
+                <TableRow
+                  key={i}
+                  onClick={() => router.push(`/medical-examination/${i}`)}>
+                  <TableCell>{medicalExamination?.sympton}</TableCell>
+                  <TableCell>{medicalExamination?.diagnostic}</TableCell>
+                  <TableCell>
+                    {medicalExamination?.date.toDateString()}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
-}
+};
+
+export default MedicalExaminationPage;

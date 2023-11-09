@@ -36,6 +36,24 @@
                 "internalType": "string",
                 "name": "patientBirthday",
                 "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "bool",
+                "name": "patientGender",
+                "type": "bool"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "patientNumber",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "timestamp",
+                "type": "uint256"
             }
         ],
         "name": "MedicalRecordAdded",
@@ -81,6 +99,16 @@
                 "internalType": "string",
                 "name": "_patientBirthday",
                 "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "_patientGender",
+                "type": "bool"
+            },
+            {
+                "internalType": "string",
+                "name": "_patientNumber",
+                "type": "string"
             }
         ],
         "name": "addMedicalRecord",
@@ -113,6 +141,16 @@
                     {
                         "internalType": "string",
                         "name": "patientBirthday",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "patientGender",
+                        "type": "bool"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "patientNumber",
                         "type": "string"
                     },
                     {
