@@ -12,6 +12,7 @@ import { ethers } from "ethers";
 import React, { ReactNode } from "react";
 import { menus } from "@/constants";
 import Link from "next/link";
+import { Sidebar } from "./SidebarLayout";
 
 import { cn } from "@/lib/utils";
 import { IMenu } from "@/_types_";
@@ -19,6 +20,7 @@ import { IMenu } from "@/_types_";
 export function MainLayout({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
   const [isOpenMenu, setIsOpenMenu] = React.useState<Boolean>(false);
+  const [isOpenSidebar, setIsOpenSidebar] = React.useState<Boolean>(true);
   const { wallet } = useAppSelector((state) => state.account);
   const onConnectMetamask = async () => {
     if (window.ethereum) {
@@ -49,6 +51,55 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
       <div className="min-h-full">
         <nav className="bg-gray-800">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="relative "></div>
+            {!isOpenSidebar && (
+              <button
+                type="button"
+                className="absolute p-5 left-0 rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                aria-controls="mobile-menu"
+                aria-expanded="false"
+                onClick={() => setIsOpenSidebar(!isOpenSidebar)}>
+                <span className="absolute -inset-0.5"></span>
+                <span className="sr-only">Open main menu</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+              </button>
+            )}
+            {isOpenSidebar && (
+              <button
+                type="button"
+                className="absolute p-5 left-0 rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                aria-controls="mobile-menu"
+                aria-expanded="false"
+                onClick={() => setIsOpenSidebar(!isOpenSidebar)}>
+                <span className="absolute -inset-0.5"></span>
+                <span className="sr-only">Open main menu</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5"
+                  />
+                </svg>
+              </button>
+            )}
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
@@ -192,16 +243,31 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
           )}
         </nav>
 
-        <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <header className="bg-white shadow flex">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 ">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
               Medical Record Management
             </h1>
           </div>
         </header>
         <main>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            {children}
+          <div className={cn("grid md:grid-cols-sidebar ")}>
+            <div
+              className={cn(
+                "shadow-md bg-zinc-50 ease-in-out transition transition-transform duration-300 min-h-screen",
+                isOpenSidebar ? "translate-x-0" : "-translate-x-full"
+              )}>
+              <Sidebar />
+            </div>
+
+            <div
+              className={cn(
+                "min-h-screen pl-6 w-full max-w-7xl py-6 sm:px-6 lg:px-8  ease-in-out transition transition-transform duration-300",
+                // isOpenSidebar && "mx-auto",
+                isOpenSidebar ? "translate-x-0" : "-translate-x-20"
+              )}>
+              {children}
+            </div>
           </div>
         </main>
       </div>
