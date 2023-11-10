@@ -17,11 +17,14 @@ const InfoComponents: React.FC<PatientProps> = ({ address }) => {
       setPatientInfo(undefined);
       return;
     }
-    const medicalRecordContract = new MedicalRecordContract(web3Provider);
-    const patient: PatientInfo = await medicalRecordContract.getMedicalRecords(
-      address
-    );
-    setPatientInfo(patient);
+    try {
+      const medicalRecordContract = new MedicalRecordContract(web3Provider);
+      const patient: PatientInfo =
+        await medicalRecordContract.getMedicalRecords(address);
+      setPatientInfo(patient);
+    } catch (err) {
+      console.log(err);
+    }
   }, [web3Provider, wallet]);
 
   React.useEffect(() => {

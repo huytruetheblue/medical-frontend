@@ -23,9 +23,13 @@ const VaccinComponents: React.FC<VaccinProps> = ({ address }) => {
 
   const [vaccination, setVaccination] = React.useState<VaccinationInfo[]>([]);
   const getVaccination = React.useCallback(async () => {
-    const vaccinationContract = new VaccinationContract(web3Provider);
-    const vaccin = await vaccinationContract.getVaccinHistory(address);
-    setVaccination(vaccin);
+    try {
+      const vaccinationContract = new VaccinationContract(web3Provider);
+      const vaccin = await vaccinationContract.getVaccinHistory(address);
+      setVaccination(vaccin);
+    } catch (err) {
+      console.log(err);
+    }
   }, [web3Provider]);
 
   React.useEffect(() => {

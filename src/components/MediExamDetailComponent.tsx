@@ -2,6 +2,7 @@ import { MedicalExamination, PrescriptionInfo } from "@/_types_";
 
 interface MediExamDetailProps {
   address: string;
+  link: string;
   index: number;
 }
 
@@ -17,12 +18,15 @@ import {
 import MedicalExaminationContract from "@/contracts/MedicalExaminationContract";
 import PrescriptionContract from "@/contracts/PrescriptionContract";
 import { useAppSelector } from "@/reduxs/hooks";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const MediExamDetailComponents: React.FC<MediExamDetailProps> = ({
   address,
   index,
+  link,
 }) => {
+  const router = useRouter();
   const { web3Provider } = useAppSelector((state) => state.account);
   const [medicalExamination, setMedicalExamination] =
     React.useState<MedicalExamination>();
@@ -33,19 +37,23 @@ const MediExamDetailComponents: React.FC<MediExamDetailProps> = ({
     if (!web3Provider) {
       return;
     }
-
-    const medicalExaminationContract = new MedicalExaminationContract(
-      web3Provider
-    );
-    const medicalExamination =
-      await medicalExaminationContract.getMedicalExamination(address, index);
-    setMedicalExamination(medicalExamination);
-    const prescriptionContract = new PrescriptionContract(web3Provider);
-    const prescription = await prescriptionContract.getPrescription(
-      address,
-      index
-    );
-    setPrescription(prescription);
+    try {
+      const medicalExaminationContract = new MedicalExaminationContract(
+        web3Provider
+      );
+      const medicalExamination =
+        await medicalExaminationContract.getMedicalExamination(address, index);
+      setMedicalExamination(medicalExamination);
+      const prescriptionContract = new PrescriptionContract(web3Provider);
+      const prescription = await prescriptionContract.getPrescription(
+        address,
+        index
+      );
+      setPrescription(prescription);
+    } catch (err) {
+      router.push(link);
+      console.log(err);
+    }
   }, [web3Provider]);
 
   React.useEffect(() => {

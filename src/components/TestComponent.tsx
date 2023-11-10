@@ -24,9 +24,13 @@ const TestComponents: React.FC<TestProps> = ({ address }) => {
   const router = useRouter();
 
   const getTestHistory = React.useCallback(async () => {
-    const testHistoryContract = new TestHistoryContract(web3Provider);
-    const test = await testHistoryContract.getTestHistory(address);
-    setTestHistory(test);
+    try {
+      const testHistoryContract = new TestHistoryContract(web3Provider);
+      const test = await testHistoryContract.getTestHistory(address);
+      setTestHistory(test);
+    } catch (err) {
+      console.log(err);
+    }
   }, [web3Provider]);
 
   React.useEffect(() => {

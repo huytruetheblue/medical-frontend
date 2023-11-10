@@ -1,27 +1,28 @@
 "use client";
 
 import React from "react";
-import { menus } from "@/constants";
+import { patient_menus } from "@/constants";
 import Sidebar from "./SidebarLayout";
 import NavigationLayout from "./NavigationLayout";
 import { cn } from "@/lib/utils";
+import { InputWithButton } from "@/components/InputWithButton";
 
-export function MainLayout({ children }: { children: React.ReactNode }) {
+export function PatientLayout({ children }: { children: React.ReactNode }) {
   const [isOpenSidebar, setIsOpenSidebar] = React.useState<boolean>(false);
 
   return (
     <div className="space-y-4 h-full w-full dark:bg-[#1E1F22] bg-[#E3E5E8] ">
       <div className="min-h-full">
         <NavigationLayout
-          menus={menus}
+          menus={patient_menus}
           isOpenSidebar={isOpenSidebar}
           setIsOpenSidebar={setIsOpenSidebar}
         />
 
-        <header className="bg-white shadow flex mt-16">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 ">
+        <header className="bg-white shadow flex  mt-16">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-              Xem Bệnh Án Cá Nhân
+              Xem Bệnh Án Bệnh Nhân
             </h1>
           </div>
         </header>
@@ -41,6 +42,10 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                 // isOpenSidebar && "mx-auto",
                 isOpenSidebar ? "translate-x-0" : "-translate-x-20"
               )}>
+              <div className="shadow-lg shadow-gray-500/50 flex-1">
+                <InputWithButton />
+              </div>
+              <br />
               {children}
             </div>
           </div>

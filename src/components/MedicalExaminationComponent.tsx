@@ -2,6 +2,7 @@ import { MedicalExamination } from "@/_types_";
 
 interface MedicalExaminationProps {
   address: string;
+  link: string;
 }
 
 import {
@@ -20,6 +21,7 @@ import React from "react";
 
 const MedicalExaminationComponents: React.FC<MedicalExaminationProps> = ({
   address,
+  link,
 }) => {
   const { web3Provider } = useAppSelector((state) => state.account);
   const [medicalExaminations, setMedicalExaminations] =
@@ -30,13 +32,16 @@ const MedicalExaminationComponents: React.FC<MedicalExaminationProps> = ({
     if (!web3Provider) {
       return;
     }
-
-    const medicalExaminationContract = new MedicalExaminationContract(
-      web3Provider
-    );
-    const medicalExaminations =
-      await medicalExaminationContract.getAllMedicalExaminations(address);
-    setMedicalExaminations(medicalExaminations);
+    try {
+      const medicalExaminationContract = new MedicalExaminationContract(
+        web3Provider
+      );
+      const medicalExaminations =
+        await medicalExaminationContract.getAllMedicalExaminations(address);
+      setMedicalExaminations(medicalExaminations);
+    } catch (err) {
+      console.log(err);
+    }
   }, [web3Provider]);
 
   React.useEffect(() => {
@@ -57,9 +62,7 @@ const MedicalExaminationComponents: React.FC<MedicalExaminationProps> = ({
         <TableBody>
           {medicalExaminations?.map((medicalExamination, i) => {
             return (
-              <TableRow
-                key={i}
-                onClick={() => router.push(`/medical-examination/${i}`)}>
+              <TableRow key={i} onClick={() => router.push(`${link}/${i}`)}>
                 <TableCell>{medicalExamination?.sympton}</TableCell>
                 <TableCell>{medicalExamination?.diagnostic}</TableCell>
                 <TableCell>{medicalExamination?.date.toDateString()}</TableCell>

@@ -13,11 +13,11 @@ interface PrecriptionDetailProps {
 }
 
 const PrecriptionDetailPage = ({ params }: PrecriptionDetailProps) => {
-  const { web3Provider, wallet } = useAppSelector((state) => state.account);
+  const { address } = useAppSelector((state) => state.address);
   const router = useRouter();
 
   React.useEffect(() => {
-    if (!web3Provider || !wallet) {
+    if (!address) {
       router.push("/");
     }
   });
@@ -33,12 +33,12 @@ const PrecriptionDetailPage = ({ params }: PrecriptionDetailProps) => {
           </p>
         </div>
       </div>
-      {wallet && <InfoComponents address={wallet.address} />}
+      {address && <InfoComponents address={address} />}
 
-      {wallet && (
+      {address && (
         <MediExamDetailComponents
-          address={wallet?.address}
-          link="/medical-examination"
+          address={address}
+          link="/patient/medical-examination"
           index={params.index}
         />
       )}

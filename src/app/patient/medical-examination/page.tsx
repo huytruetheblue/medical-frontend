@@ -3,21 +3,15 @@
 import { useAppSelector } from "@/reduxs/hooks";
 import React from "react";
 import InfoComponents from "@/components/InfoComponent";
-import MediExamDetailComponents from "@/components/MediExamDetailComponent";
+import MedicalExaminationComponents from "@/components/MedicalExaminationComponent";
 import { useRouter } from "next/navigation";
 
-interface PrecriptionDetailProps {
-  params: {
-    index: number;
-  };
-}
-
-const PrecriptionDetailPage = ({ params }: PrecriptionDetailProps) => {
-  const { web3Provider, wallet } = useAppSelector((state) => state.account);
+const MedicalExaminationPage = () => {
+  const { address } = useAppSelector((state) => state.address);
   const router = useRouter();
 
   React.useEffect(() => {
-    if (!web3Provider || !wallet) {
+    if (!address) {
       router.push("/");
     }
   });
@@ -33,17 +27,17 @@ const PrecriptionDetailPage = ({ params }: PrecriptionDetailProps) => {
           </p>
         </div>
       </div>
-      {wallet && <InfoComponents address={wallet.address} />}
+      {address && <InfoComponents address={address} />}
 
-      {wallet && (
-        <MediExamDetailComponents
-          address={wallet?.address}
-          link="/medical-examination"
-          index={params.index}
+      <br />
+      {address && (
+        <MedicalExaminationComponents
+          link="/patient/medical-examination"
+          address={address}
         />
       )}
     </div>
   );
 };
 
-export default PrecriptionDetailPage;
+export default MedicalExaminationPage;
