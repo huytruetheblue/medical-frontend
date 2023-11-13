@@ -22,8 +22,8 @@ export default class VaccinationContract extends BaseInterface {
     }
   }
 
-  addVaccin = async (patient: String, vacName: String, vacAmount: String) => {
-    const rs = await this._contract.addVaccin(patient, vacName, vacAmount);
+  addVaccin = async (patient: String, vacType: String, vacName: String) => {
+    const rs = await this._contract.addVaccin(patient, vacType, vacName);
     return this._handleTransactionResponse(rs);
   };
 
@@ -33,8 +33,8 @@ export default class VaccinationContract extends BaseInterface {
     for (let i = 0; i < rs.length; i += 1) {
       const result = rs[i];
       results.push({
+        vaccineType: result.vacType,
         vaccineName: result.vacName,
-        vaccineAmount: result.vacAmount,
         date: new Date(result.timestamp * 1000),
       });
     }

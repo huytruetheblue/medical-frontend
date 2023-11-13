@@ -37,7 +37,7 @@ export interface PrescriptionInfo {
 
 export interface VaccinationInfo {
   vaccineName: string;
-  vaccineAmount: string;
+  vaccineType: string;
   date: Date;
 }
 

@@ -78,6 +78,11 @@
                         "internalType": "uint256",
                         "name": "timestamp",
                         "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "sender",
+                        "type": "address"
                     }
                 ],
                 "internalType": "struct TestHistory.Test[]",
@@ -137,6 +142,11 @@
                 "internalType": "uint256",
                 "name": "timestamp",
                 "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
             }
         ],
         "stateMutability": "view",

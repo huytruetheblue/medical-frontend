@@ -16,37 +16,6 @@
             {
                 "indexed": true,
                 "internalType": "address",
-                "name": "examinationAddress",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "sympton",
-                "type": "string"
-            },
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "diagnostic",
-                "type": "string"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "timestamp",
-                "type": "uint256"
-            }
-        ],
-        "name": "MediCalExaminationAdded",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
                 "name": "previousOwner",
                 "type": "address"
             },
@@ -109,6 +78,11 @@
                         "internalType": "uint256",
                         "name": "timestamp",
                         "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "sender",
+                        "type": "address"
                     }
                 ],
                 "internalType": "struct MedicalExaminations.MedicalExamination[]",
@@ -150,6 +124,11 @@
                         "internalType": "uint256",
                         "name": "timestamp",
                         "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "sender",
+                        "type": "address"
                     }
                 ],
                 "internalType": "struct MedicalExaminations.MedicalExamination",

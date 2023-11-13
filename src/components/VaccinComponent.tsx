@@ -42,8 +42,8 @@ const VaccinComponents: React.FC<VaccinProps> = ({ address }) => {
         <TableCaption className="pb-6">Lịch sử Tiêm chủng</TableCaption>
         <TableHeader>
           <TableRow>
+            <TableHead>Loại Vaccin</TableHead>
             <TableHead>Tên vaccin</TableHead>
-            <TableHead>Liều lượng</TableHead>
             <TableHead>Ngày tiêm chủng</TableHead>
           </TableRow>
         </TableHeader>
@@ -51,8 +51,8 @@ const VaccinComponents: React.FC<VaccinProps> = ({ address }) => {
           {vaccination?.map((vaccin: VaccinationInfo, i: number) => {
             return (
               <TableRow key={i}>
+                <TableCell>{vaccin.vaccineType}</TableCell>
                 <TableCell>{vaccin.vaccineName}</TableCell>
-                <TableCell>{vaccin.vaccineAmount}</TableCell>
                 <TableCell>{vaccin.date.toDateString()}</TableCell>
               </TableRow>
             );

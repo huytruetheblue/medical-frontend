@@ -1,3 +1,4 @@
+import { ModalProvider } from "@/components/provider/modalProvider";
 import { PatientLayout } from "@/layout/PatientLayout";
 import ReduxProvider from "@/reduxs/ReduxProvider";
 
@@ -8,7 +9,10 @@ export default function RootLayout({
 }) {
   return (
     <ReduxProvider>
-      <PatientLayout>{children}</PatientLayout>
+      <PatientLayout>
+        <ModalProvider />
+        {children}
+      </PatientLayout>
     </ReduxProvider>
   );
 }

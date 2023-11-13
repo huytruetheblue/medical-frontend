@@ -13,7 +13,7 @@ const InfoComponents: React.FC<PatientProps> = ({ address }) => {
   const [patientInfo, setPatientInfo] = React.useState<PatientInfo>();
 
   const getPatientInfo = React.useCallback(async () => {
-    if (!web3Provider || !wallet) {
+    if (!web3Provider || !address) {
       setPatientInfo(undefined);
       return;
     }
@@ -25,7 +25,7 @@ const InfoComponents: React.FC<PatientProps> = ({ address }) => {
     } catch (err) {
       console.log(err);
     }
-  }, [web3Provider, wallet]);
+  }, [web3Provider, address]);
 
   React.useEffect(() => {
     getPatientInfo();

@@ -24,15 +24,15 @@ export const getRPC = () => {
 
 export const SMART_ADDRESS = {
   ACLContract: { 97: "0xea4F2Ba39F10586a5AD66481fDFF0E201fD31DE9", 56: "" },
-  TestHistory: { 97: "0xba791000a8ee54a17ef136Bd3f578aA1b075c283", 56: "" },
+  TestHistory: { 97: "0xbc39FDA4925307Ad1B54BB44Cd16485B80E514b7", 56: "" },
   VaccinationHistory: {
-    97: "0x8eFc9e20eb52f83c743Fd1A37d88D01D46B86BeD",
+    97: "0x7B068FFc7B302cFF41225070A97f32b00DcA41Ce",
     56: "",
   },
   Prescription: { 97: "0xC437b9f7e3df84e9F21653a90F4805BaAd4E7Ba9", 56: "" },
-  MedicalRecord: { 97: "0x90B4dDf5aB9b04CCa724AA3F8B98480c8cDA9412", 56: "" },
+  MedicalRecord: { 97: "0x8e1a381B41B59D75E00889A541029bEFB1b04A39", 56: "" },
   MedicalExamination: {
-    97: "0x6162dF2c206095B86c436034d13bf3f600594636",
+    97: "0x4cC865543bFD730602ad6CE9511fd8bB856a1Ce1",
     56: "",
   },
 };

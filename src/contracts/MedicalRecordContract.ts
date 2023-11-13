@@ -26,13 +26,17 @@ export default class MedicalRecordContract extends BaseInterface {
     patient: String,
     patientName: String,
     patientAddress: String,
-    birthday: String
+    patientBirthday: String,
+    patientGender: boolean,
+    patientNumber: string
   ) => {
     const rs = await this._contract.addMedicalRecord(
       patient,
       patientName,
       patientAddress,
-      birthday
+      patientBirthday,
+      patientGender,
+      patientNumber
     );
     return this._handleTransactionResponse(rs);
   };

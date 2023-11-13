@@ -16,55 +16,6 @@
             {
                 "indexed": true,
                 "internalType": "address",
-                "name": "patient",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "patientName",
-                "type": "string"
-            },
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "patientAddress",
-                "type": "string"
-            },
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "patientBirthday",
-                "type": "string"
-            },
-            {
-                "indexed": false,
-                "internalType": "bool",
-                "name": "patientGender",
-                "type": "bool"
-            },
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "patientNumber",
-                "type": "string"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "timestamp",
-                "type": "uint256"
-            }
-        ],
-        "name": "MedicalRecordAdded",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
                 "name": "previousOwner",
                 "type": "address"
             },
@@ -157,6 +108,11 @@
                         "internalType": "uint256",
                         "name": "timestamp",
                         "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "sender",
+                        "type": "address"
                     }
                 ],
                 "internalType": "struct MedicalRecords.MedicalRecord",

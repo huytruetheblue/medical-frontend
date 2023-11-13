@@ -38,12 +38,12 @@
             },
             {
                 "internalType": "string",
-                "name": "_vacName",
+                "name": "_vacType",
                 "type": "string"
             },
             {
                 "internalType": "string",
-                "name": "_vacAmount",
+                "name": "_vacName",
                 "type": "string"
             }
         ],
@@ -71,13 +71,18 @@
                     },
                     {
                         "internalType": "string",
-                        "name": "vacAmount",
+                        "name": "vacType",
                         "type": "string"
                     },
                     {
                         "internalType": "uint256",
                         "name": "timestamp",
                         "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "sender",
+                        "type": "address"
                     }
                 ],
                 "internalType": "struct VaccinationHistory.Vaccination[]",
@@ -143,13 +148,18 @@
             },
             {
                 "internalType": "string",
-                "name": "vacAmount",
+                "name": "vacType",
                 "type": "string"
             },
             {
                 "internalType": "uint256",
                 "name": "timestamp",
                 "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
             }
         ],
         "stateMutability": "view",
