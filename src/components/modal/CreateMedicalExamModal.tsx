@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -208,12 +208,24 @@ const CreateMedicalExamModal = () => {
             />
 
             {renderInputs()}
+            <FormLabel
+              onClick={handleAddInput}
+              className="justify-center flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </FormLabel>
             <DialogFooter className="px-6 py-2">
-              <Button
-                onClick={handleAddInput}
-                className="bg-blue-500 border-2 border-gray-700/50 shadow-md">
-                Thêm Tên Thuốc
-              </Button>
               <Button
                 type="submit"
                 className="bg-gray-500 border-2 border-gray-700/50 shadow-md">
