@@ -42,7 +42,7 @@ export function PatientLayout({ children }: { children: React.ReactNode }) {
                 // isOpenSidebar && "mx-auto",
                 isOpenSidebar ? "translate-x-0" : "-translate-x-20"
               )}>
-              <div className="shadow-lg shadow-gray-500/50 flex-1">
+              <div className="shadow-lg shadow-gray-500/50 flex-1 border-gray-300 border border-1 rounded-[16px] p-4">
                 <InputWithButton />
               </div>
               <br />

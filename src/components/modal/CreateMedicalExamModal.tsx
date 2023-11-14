@@ -43,8 +43,8 @@ const formSchema = z.object({
 
 const CreateMedicalExamModal = () => {
   const router = useRouter();
-  const { isOpen, onClose, type } = useModal();
-  const { address } = useAppSelector((state) => state.address);
+  const { isOpen, onClose, type, data } = useModal();
+  const { address } = data;
   const { web3Provider, wallet } = useAppSelector((state) => state.account);
 
   const [inputs, setInputs] = React.useState([

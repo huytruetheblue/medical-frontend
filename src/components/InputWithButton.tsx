@@ -37,7 +37,7 @@ export function InputWithButton() {
   };
 
   return (
-    <div className="columns-2">
+    <div className="columns-2 ">
       <div className="w-full p-3 text-base font-semibold leading-7 text-gray-900">
         Nhập vào Public Key Bệnh Nhân
       </div>
@@ -64,7 +64,7 @@ export function InputWithButton() {
         />
         <Button
           type="submit"
-          className="bg-gray-500 border-2 border-gray-700/50 shadow-md">
+          className="bg-gray-500 border-2 border-gray-700/50 shadow-md rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

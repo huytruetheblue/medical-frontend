@@ -1,4 +1,5 @@
-import { MainLayout } from "@/layout/MainLayout";
+import { ModalProvider } from "@/components/provider/modalProvider";
+import { MainLayout } from "@/layout/mainLayout";
 import ReduxProvider from "@/reduxs/ReduxProvider";
 
 export default function RootLayout({
@@ -8,7 +9,11 @@ export default function RootLayout({
 }) {
   return (
     <ReduxProvider>
-      <MainLayout>{children}</MainLayout>
+      <MainLayout>
+        <ModalProvider />
+
+        {children}
+      </MainLayout>
     </ReduxProvider>
   );
 }

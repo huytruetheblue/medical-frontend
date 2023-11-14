@@ -2,29 +2,24 @@ interface TestProps {
   address: string;
 }
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-
 import React from "react";
-import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/reduxs/hooks";
-import { TestInfo } from "@/_types_";
+import { PatientInfo, TestInfo } from "@/_types_";
 import TestHistoryContract from "@/contracts/TestHistoryContract";
+import MedicalRecordContract from "@/contracts/MedicalRecordContract";
+import { useModal } from "@/reduxs/use-modal-store";
 
 const TestComponents: React.FC<TestProps> = ({ address }) => {
   const { web3Provider } = useAppSelector((state) => state.account);
   const [testHistory, setTestHistory] = React.useState<TestInfo[]>([]);
-  const router = useRouter();
-
+  const [patientInfo, setPatientInfo] = React.useState<PatientInfo>();
+  const { onOpen } = useModal();
   const getTestHistory = React.useCallback(async () => {
     try {
+      const medicalRecordContract = new MedicalRecordContract(web3Provider);
+      const patient: PatientInfo =
+        await medicalRecordContract.getMedicalRecords(address);
+      setPatientInfo(patient);
       const testHistoryContract = new TestHistoryContract(web3Provider);
       const test = await testHistoryContract.getTestHistory(address);
       setTestHistory(test);
@@ -37,28 +32,88 @@ const TestComponents: React.FC<TestProps> = ({ address }) => {
     getTestHistory();
   }, [getTestHistory]);
   return (
-    <div className="shadow-lg shadow-gray-500/50">
-      <Table>
-        <TableCaption className="pb-6">Lịch sử Xét nghiệm</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Tên xét nghiệm</TableHead>
-            <TableHead>Kết quả</TableHead>
-            <TableHead>Ngày xét nghiệm</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
+    <div className="shadow-lg shadow-gray-500/50 border-gray-300 border border-1 rounded-[16px] p-4">
+      <div className="px-4 sm:px-0">
+        <h3 className="px-4 pt-4 text-base font-semibold leading-7 text-gray-900">
+          Test History Page
+        </h3>
+        <p className="px-4 pb-4 mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+          Lịch sử xét nghiệm của người dùng
+        </p>
+      </div>
+      <div className="mt-6 border-t border-gray-100 container mx-auto ">
+        <dl className="divide-y divide-gray-100">
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm font-medium leading-6 text-gray-900">
+              Họ và tên
+            </dt>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {patientInfo?.patientName || ""}
+            </dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm font-medium leading-6 text-gray-900">
+              Public key
+            </dt>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {address || ""}
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div className="border-t-2 border-white space-y-2 pt-6">
+        <div className="pb-6 text-center px-4 pt-4 text-lg font-semibold leading-7 text-gray-900">
+          Lịch sử Xét nghiệm
+        </div>
+        <div>
+          <div className="grid grid-cols-3">
+            <div className="h-12 px-4 text-center align-middle font-medium">
+              Tên xét nghiệm
+            </div>
+            <div className="h-12 px-4 text-center align-middle font-medium">
+              Kết quả
+            </div>
+            <div className="h-12 px-4 text-center align-middle font-medium">
+              Ngày xét nghiệm
+            </div>
+          </div>
           {testHistory?.map((test: TestInfo, i: number) => {
             return (
-              <TableRow key={i}>
-                <TableCell>{test.testName}</TableCell>
-                <TableCell>{test.testResult}</TableCell>
-                <TableCell>{test.date.toDateString()}</TableCell>
-              </TableRow>
+              <div className="grid grid-cols-3" key={i}>
+                <div className="p-4 align-middle text-center">
+                  {test.testName}
+                </div>
+                <div className="p-4 align-middle text-center">
+                  {test.testResult}
+                </div>
+                <div className="p-4 align-middle text-center">
+                  {test.date.toDateString()}
+                </div>
+              </div>
             );
           })}
-        </TableBody>
-      </Table>
+          <div
+            className="col-span-3 border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer"
+            onClick={() => onOpen("createTestRecord", { address: address })}>
+            <div className="flex text-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6v12m6-6H6"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

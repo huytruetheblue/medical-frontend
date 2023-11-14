@@ -43,9 +43,9 @@ const formSchema = z.object({
 
 const CreateVaccinRecordModal = () => {
   const router = useRouter();
-  const { isOpen, onClose, type } = useModal();
-  const { address } = useAppSelector((state) => state.address);
+  const { isOpen, onClose, type, data } = useModal();
   const { web3Provider, wallet } = useAppSelector((state) => state.account);
+  const { address } = data;
 
   const form = useForm({
     resolver: zodResolver(formSchema),

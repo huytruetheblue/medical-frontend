@@ -4,7 +4,8 @@ export type ModalType =
   | "createRecord"
   | "createTestRecord"
   | "createVaccinRecord"
-  | "createExaminationRecord";
+  | "createExaminationRecord"
+  | "openExamDetailModal";
 
 interface ModalData {
   address?: String;
@@ -15,7 +16,7 @@ interface ModalStore {
   type: ModalType | null;
   isOpen: boolean;
   data: ModalData;
-  onOpen: (type: ModalType) => void;
+  onOpen: (type: ModalType, data?: ModalData) => void;
   onClose: () => void;
 }
 

@@ -10,7 +10,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { useRouter } from "next/navigation";
 import React from "react";
 import { useAppSelector } from "@/reduxs/hooks";
 import { useModal } from "@/reduxs/use-modal-store";
@@ -18,14 +17,13 @@ import { MedicalExamination, PrescriptionInfo } from "@/_types_";
 import MedicalExaminationContract from "@/contracts/MedicalExaminationContract";
 
 const ViewMedicalExamDetailModal = () => {
-  const router = useRouter();
   const { isOpen, onClose, type, data } = useModal();
   const { web3Provider } = useAppSelector((state) => state.account);
   const { address, index } = data;
   const [medicalExamination, setMedicalExamination] =
     React.useState<MedicalExamination>();
 
-  const isModalOpen = isOpen && type === "createVaccinRecord";
+  const isModalOpen = isOpen && type === "openExamDetailModal";
 
   const getPrecriptionDetail = React.useCallback(async () => {
     if (!web3Provider) {
@@ -48,7 +46,7 @@ const ViewMedicalExamDetailModal = () => {
 
   React.useEffect(() => {
     getPrecriptionDetail();
-  });
+  }, [getPrecriptionDetail]);
 
   const handleClose = () => {
     onClose();

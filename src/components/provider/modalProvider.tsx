@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import CreateRecordModal from "../modal/CreateRecordModal";
 import CreateTestRecordModal from "../modal/CreateTestRecordModal";
 import CreateVaccinRecordModal from "../modal/CreateVaccinRecordModal";
+import ViewMedicalExamDetailModal from "../modal/ViewMedicalExamDetailModal";
+import CreateMedicalExamModal from "../modal/CreateMedicalExamModal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -20,6 +22,8 @@ export const ModalProvider = () => {
       <CreateRecordModal />
       <CreateTestRecordModal />
       <CreateVaccinRecordModal />
+      <ViewMedicalExamDetailModal />
+      <CreateMedicalExamModal />
     </>
   );
 };

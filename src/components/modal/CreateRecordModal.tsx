@@ -140,8 +140,8 @@ const CreateRecordModal = () => {
       await medicalRecordContract.addMedicalRecord(
         values.publicKey,
         values.patientName,
-        values.patientBirthday.toLocaleDateString(),
         values.patientAddress,
+        values.patientBirthday.toLocaleDateString(),
         values.patientGender === "Nam" ? true : false,
         values.patientNumber
       );

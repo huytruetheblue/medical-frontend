@@ -44,7 +44,6 @@ export default class MedicalExaminationContract extends BaseInterface {
   ): Promise<MedicalExamination[]> => {
     const rs = await this._contract.getAllMedicalExaminations(address);
     const results: MedicalExamination[] = [];
-    console.log(rs);
 
     for (let i = 0; i < rs.length; i += 1) {
       const result = rs[i];
