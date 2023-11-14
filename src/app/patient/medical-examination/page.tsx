@@ -2,16 +2,16 @@
 
 import { useAppSelector } from "@/reduxs/hooks";
 import React from "react";
-import InfoComponents from "@/components/InfoComponent";
 import MedicalExaminationComponents from "@/components/MedicalExaminationComponent";
 import { useRouter } from "next/navigation";
 
 const MedicalExaminationPage = () => {
   const { address } = useAppSelector((state) => state.address);
+  const { role } = useAppSelector((state) => state.account);
   const router = useRouter();
 
   React.useEffect(() => {
-    if (!address) {
+    if (!address || !role) {
       router.push("/");
     }
   });

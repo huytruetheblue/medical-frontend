@@ -63,12 +63,11 @@ const CreateVaccinRecordModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const vaccinationContract = new VaccinationContract(web3Provider);
-      const result = await vaccinationContract.addVaccin(
+      await vaccinationContract.addVaccin(
         address!,
         values.vacType,
         values.vacName
       );
-      console.log(result);
 
       form.reset();
       router.refresh();

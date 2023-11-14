@@ -12,7 +12,7 @@ import { useAppSelector } from "@/reduxs/hooks";
 import React from "react";
 
 const VaccinComponents: React.FC<VaccinProps> = ({ address }) => {
-  const { web3Provider } = useAppSelector((state) => state.account);
+  const { web3Provider, role } = useAppSelector((state) => state.account);
   const [patientInfo, setPatientInfo] = React.useState<PatientInfo>();
 
   const [vaccination, setVaccination] = React.useState<VaccinationInfo[]>([]);
@@ -98,25 +98,29 @@ const VaccinComponents: React.FC<VaccinProps> = ({ address }) => {
               </div>
             );
           })}
-          <div
-            className="col-span-3 border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer"
-            onClick={() => onOpen("createVaccinRecord", { address: address })}>
-            <div className="flex text-center justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6v12m6-6H6"
-                />
-              </svg>
+          {role && (
+            <div
+              className="col-span-3 border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer hover:bg-gray-300"
+              onClick={() =>
+                onOpen("createVaccinRecord", { address: address })
+              }>
+              <div className="flex text-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6v12m6-6H6"
+                  />
+                </svg>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

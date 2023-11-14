@@ -32,7 +32,6 @@ export function InputWithButton() {
       return;
     }
     dispatch(setAddressPatient(data.address));
-    console.log(data);
     setValue("address", "", { shouldValidate: true });
   };
 

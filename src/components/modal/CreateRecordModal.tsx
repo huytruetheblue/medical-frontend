@@ -135,7 +135,6 @@ const CreateRecordModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      console.log("...");
       const medicalRecordContract = new MedicalRecordContract(web3Provider);
       await medicalRecordContract.addMedicalRecord(
         values.publicKey,

@@ -10,11 +10,11 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   return (
     <div>
-      <Link href="/">
+      <Link href="/" className="pb-7">
         <div
           onClick={onClose}
           className={cn(
-            "hover:shadow-lg border-2 border-t-slate-100 hover:shadow-gray-500/50 block px-3 py-4 text-sm  font-medium md:text-base"
+            "hover:shadow-lg border-2 border-t-slate-100 hover:shadow-gray-500/50 hover:bg-gray-300 block px-3 py-4 text-sm  font-medium md:text-base rounded-[12px]"
           )}>
           Xem Bệnh Án Cá Nhân
         </div>
@@ -23,18 +23,9 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
         <div
           onClick={onClose}
           className={cn(
-            "hover:shadow-lg border-2 border-t-slate-100 hover:shadow-gray-500/50 block px-3 py-4 text-sm  font-medium md:text-base"
+            "hover:shadow-lg border-2 border-t-slate-100 hover:shadow-gray-500/50 hover:bg-gray-300 block px-3 py-4 text-sm font-medium md:text-base rounded-[12px]"
           )}>
           Xem Bệnh Án Bệnh Nhân
-        </div>
-      </Link>
-      <Link href="/add-record" onClick={onClose}>
-        <div
-          onClick={onClose}
-          className={cn(
-            "hover:shadow-lg border-2 border-t-slate-100 hover:shadow-gray-500/50 block px-3 py-4 text-sm  font-medium md:text-base"
-          )}>
-          Thêm Bệnh Án Bệnh Nhân
         </div>
       </Link>
     </div>

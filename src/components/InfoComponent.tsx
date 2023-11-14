@@ -9,7 +9,7 @@ interface PatientProps {
 }
 
 const InfoComponents: React.FC<PatientProps> = ({ address }) => {
-  const { web3Provider, wallet } = useAppSelector((state) => state.account);
+  const { web3Provider, role } = useAppSelector((state) => state.account);
   const [addValid, setAddValid] = React.useState<boolean>(false);
   const [patientInfo, setPatientInfo] = React.useState<PatientInfo>();
   const { onOpen } = useModal();
@@ -50,10 +50,10 @@ const InfoComponents: React.FC<PatientProps> = ({ address }) => {
               Thông tin cá nhân của người dùng
             </div>
           </div>
-          {addValid && (
-            <div className="flex items-center ">
+          {addValid && role && (
+            <div className="flex items-center">
               <div
-                className="flex border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer"
+                className="flex border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer hover:bg-gray-300"
                 onClick={() => onOpen("createRecord")}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

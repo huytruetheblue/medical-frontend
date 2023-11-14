@@ -43,7 +43,6 @@ export default class MedicalRecordContract extends BaseInterface {
 
   getMedicalRecords = async (address: String): Promise<PatientInfo> => {
     const rs = await this._contract.getMedicalRecords(address);
-    console.log(rs);
     const result: PatientInfo = {
       patientName: rs.patientName,
       patientAddress: rs.patientAddress,

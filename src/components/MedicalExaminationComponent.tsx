@@ -14,7 +14,7 @@ const MedicalExaminationComponents: React.FC<MedicalExaminationProps> = ({
   address,
 }) => {
   const { onOpen } = useModal();
-  const { web3Provider } = useAppSelector((state) => state.account);
+  const { web3Provider, role } = useAppSelector((state) => state.account);
   const [medicalExaminations, setMedicalExaminations] =
     React.useState<MedicalExamination[]>();
   const [patientInfo, setPatientInfo] = React.useState<PatientInfo>();
@@ -115,27 +115,29 @@ const MedicalExaminationComponents: React.FC<MedicalExaminationProps> = ({
               );
             }
           )}
-          <div
-            className="col-span-3 border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer"
-            onClick={() =>
-              onOpen("createExaminationRecord", { address: address })
-            }>
-            <div className="flex text-center justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6v12m6-6H6"
-                />
-              </svg>
+          {role && (
+            <div
+              className="col-span-3 border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer hover:bg-gray-300"
+              onClick={() =>
+                onOpen("createExaminationRecord", { address: address })
+              }>
+              <div className="flex text-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6v12m6-6H6"
+                  />
+                </svg>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

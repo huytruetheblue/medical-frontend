@@ -22,7 +22,7 @@ export default class ACLContract extends BaseInterface {
     }
   }
 
-  hasDoctorOrNurseRole = async (address: String): Promise<TestInfo[]> => {
+  hasDoctorOrNurseRole = async (address: String): Promise<boolean> => {
     const rs = await this._contract.hasDoctorOrNurseRole(address);
     return rs;
   };

@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/reduxs/hooks";
 import {
   setWalletInfo,
   setWeb3Provider,
+  setRole,
   clearState,
 } from "@/reduxs/accounts/account.slices";
 import { ethers } from "ethers";
@@ -14,7 +15,7 @@ import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { IMenu } from "@/_types_";
-
+import ACLContract from "@/contracts/ACLContract";
 interface SidebarProps {
   menus: IMenu[];
   isOpenSidebar: boolean;
@@ -26,10 +27,11 @@ const NavigationLayout: React.FC<SidebarProps> = ({
   isOpenSidebar,
   setIsOpenSidebar,
 }) => {
-  const dispatch = useAppDispatch();
   const [isOpenMenu, setIsOpenMenu] = React.useState<Boolean>(false);
+  const dispatch = useAppDispatch();
 
   const { wallet } = useAppSelector((state) => state.account);
+  const { role } = useAppSelector((state) => state.account);
 
   const onConnectMetamask = async () => {
     if (window.ethereum) {
@@ -44,8 +46,11 @@ const NavigationLayout: React.FC<SidebarProps> = ({
       const bnbBalance = Number.parseFloat(
         ethers.utils.formatEther(bigBalance)
       );
+      const aclContract = new ACLContract(provider);
+      const role = await aclContract.hasDoctorOrNurseRole(address);
       dispatch(setWalletInfo({ address, bnb: bnbBalance }));
       dispatch(setWeb3Provider(provider));
+      dispatch(setRole(role));
     }
   };
 
@@ -59,7 +64,7 @@ const NavigationLayout: React.FC<SidebarProps> = ({
     <nav className="bg-gray-800 fixed left-0 top-0 w-full z-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative "></div>
-        {!isOpenSidebar && (
+        {!isOpenSidebar && role && (
           <button
             type="button"
             className="absolute p-5 left-0 rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -83,7 +88,7 @@ const NavigationLayout: React.FC<SidebarProps> = ({
             </svg>
           </button>
         )}
-        {isOpenSidebar && (
+        {isOpenSidebar && role && (
           <button
             type="button"
             className="absolute p-5 left-0 rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"

@@ -2,7 +2,6 @@
 
 import { useAppSelector } from "@/reduxs/hooks";
 import React from "react";
-import InfoComponents from "@/components/InfoComponent";
 import VaccinComponents from "@/components/VaccinComponent";
 import { useRouter } from "next/navigation";
 
