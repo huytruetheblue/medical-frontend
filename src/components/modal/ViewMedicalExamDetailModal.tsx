@@ -1,6 +1,17 @@
 "use client";
 
 import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -28,13 +39,24 @@ const ViewMedicalExamDetailModal = () => {
   };
 
   return (
-    <Dialog open={true} onOpenChange={handleClose}>
+    <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="bg-white text-black py-5 px-10 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
             Thêm Lịch Sử Tiêm Vaccin
           </DialogTitle>
         </DialogHeader>
+        <FormItem>
+          <FormLabel>Public Key</FormLabel>
+          <FormControl>
+            <Input
+              readOnly={true}
+              placeholder="Public Key"
+              value={address!.toString()}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
       </DialogContent>
     </Dialog>
   );

@@ -1,4 +1,4 @@
-import { MedicalExamination } from "@/_types_";
+import { MedicalExamination, PrescriptionInfo } from "@/_types_";
 import { ethers } from "ethers";
 import { getRPC } from "./utils/common";
 import { BaseInterface } from "./interfaces";
@@ -23,14 +23,18 @@ export default class MedicalExaminationContract extends BaseInterface {
   }
 
   addMedicalExamination = async (
+    _addressPatient: String,
     _sympton: String,
     _diagnostic: String,
-    _medicalRecord: String
+    _medicalNames: String[],
+    _medicalResults: String[]
   ) => {
     const rs = await this._contract.addMedicalExamination(
+      _addressPatient,
       _sympton,
       _diagnostic,
-      _medicalRecord
+      _medicalNames,
+      _medicalResults
     );
     return this._handleTransactionResponse(rs);
   };
@@ -40,13 +44,22 @@ export default class MedicalExaminationContract extends BaseInterface {
   ): Promise<MedicalExamination[]> => {
     const rs = await this._contract.getAllMedicalExaminations(address);
     const results: MedicalExamination[] = [];
+    console.log(rs);
 
     for (let i = 0; i < rs.length; i += 1) {
       const result = rs[i];
+
+      const prescriptions: PrescriptionInfo[] = [];
+      for (let j = 0; j < result.medicalName.length; j += 1) {
+        prescriptions.push({
+          medicineName: result.medicalName[i],
+          medicineDosage: result.medicalDosage[i],
+        });
+      }
       results.push({
         sympton: result.sympton,
         diagnostic: result.diagnostic,
-        medicalRecord: result.medicalRecord,
+        prescription: prescriptions,
         date: new Date(result.timestamp * 1000),
       });
     }
@@ -58,10 +71,17 @@ export default class MedicalExaminationContract extends BaseInterface {
     index: Number
   ): Promise<MedicalExamination> => {
     const rs = await this._contract.getMedicalExamination(address, index);
+    const prescriptions: PrescriptionInfo[] = [];
+    for (let i = 0; i < rs.medicalName.length; i += 1) {
+      prescriptions.push({
+        medicineName: rs.medicalName[i],
+        medicineDosage: rs.medicalDosage[i],
+      });
+    }
     const result: MedicalExamination = {
       sympton: rs.sympton,
       diagnostic: rs.diagnostic,
-      medicalRecord: rs.medicalRecord,
+      prescription: prescriptions,
       date: new Date(rs.timestamp * 1000),
     };
     return result;

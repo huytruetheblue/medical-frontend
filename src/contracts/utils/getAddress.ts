@@ -14,9 +14,6 @@ export const getTestHistoryAddress = () =>
 export const getVaccinationHistoryAddress = () =>
   getAddress(SMART_ADDRESS.VaccinationHistory);
 
-export const getPrescriptionAddress = () =>
-  getAddress(SMART_ADDRESS.Prescription);
-
 export const getMedicalRecordAddress = () =>
   getAddress(SMART_ADDRESS.MedicalRecord);
 

@@ -45,6 +45,16 @@
                 "internalType": "string",
                 "name": "_diagnostic",
                 "type": "string"
+            },
+            {
+                "internalType": "string[]",
+                "name": "_medicalName",
+                "type": "string[]"
+            },
+            {
+                "internalType": "string[]",
+                "name": "_dosage",
+                "type": "string[]"
             }
         ],
         "name": "addMedicalExamination",
@@ -73,6 +83,16 @@
                         "internalType": "string",
                         "name": "diagnostic",
                         "type": "string"
+                    },
+                    {
+                        "internalType": "string[]",
+                        "name": "medicalName",
+                        "type": "string[]"
+                    },
+                    {
+                        "internalType": "string[]",
+                        "name": "medicalDosage",
+                        "type": "string[]"
                     },
                     {
                         "internalType": "uint256",
@@ -119,6 +139,16 @@
                         "internalType": "string",
                         "name": "diagnostic",
                         "type": "string"
+                    },
+                    {
+                        "internalType": "string[]",
+                        "name": "medicalName",
+                        "type": "string[]"
+                    },
+                    {
+                        "internalType": "string[]",
+                        "name": "medicalDosage",
+                        "type": "string[]"
                     },
                     {
                         "internalType": "uint256",

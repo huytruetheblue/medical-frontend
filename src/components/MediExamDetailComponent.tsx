@@ -16,7 +16,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import MedicalExaminationContract from "@/contracts/MedicalExaminationContract";
-import PrescriptionContract from "@/contracts/PrescriptionContract";
 import { useAppSelector } from "@/reduxs/hooks";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -30,9 +29,6 @@ const MediExamDetailComponents: React.FC<MediExamDetailProps> = ({
   const { web3Provider } = useAppSelector((state) => state.account);
   const [medicalExamination, setMedicalExamination] =
     React.useState<MedicalExamination>();
-  const [prescription, setPrescription] = React.useState<PrescriptionInfo[]>(
-    []
-  );
   const getPrecriptionDetail = React.useCallback(async () => {
     if (!web3Provider) {
       return;
@@ -44,12 +40,6 @@ const MediExamDetailComponents: React.FC<MediExamDetailProps> = ({
       const medicalExamination =
         await medicalExaminationContract.getMedicalExamination(address, index);
       setMedicalExamination(medicalExamination);
-      const prescriptionContract = new PrescriptionContract(web3Provider);
-      const prescription = await prescriptionContract.getPrescription(
-        address,
-        index
-      );
-      setPrescription(prescription);
     } catch (err) {
       router.push(link);
       console.log(err);

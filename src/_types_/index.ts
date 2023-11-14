@@ -44,6 +44,6 @@ export interface VaccinationInfo {
 export interface MedicalExamination {
   sympton: string;
   diagnostic: string;
-  medicalRecord: string;
+  prescription: PrescriptionInfo[];
   date: Date;
 }
