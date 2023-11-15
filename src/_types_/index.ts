@@ -12,6 +12,7 @@ export interface TestInfo {
   testName: string;
   testResult: string;
   date: Date;
+  sender: string;
 }
 
 export interface PatientInfo {
@@ -20,6 +21,7 @@ export interface PatientInfo {
   patientBirthday: string;
   patientGender: "Nam" | "Nữ" | undefined;
   patientNumber: string;
+  sender: string;
 }
 
 export interface MedicalRecords {
@@ -39,6 +41,7 @@ export interface VaccinationInfo {
   vaccineName: string;
   vaccineType: string;
   date: Date;
+  sender: string;
 }
 
 export interface MedicalExamination {
@@ -46,4 +49,5 @@ export interface MedicalExamination {
   diagnostic: string;
   prescription: PrescriptionInfo[];
   date: Date;
+  sender: string;
 }

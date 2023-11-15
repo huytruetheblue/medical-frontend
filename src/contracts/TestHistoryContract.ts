@@ -36,6 +36,7 @@ export default class TestHistoryContract extends BaseInterface {
         testName: result.testName,
         testResult: result.testResult,
         date: new Date(result.timestamp * 1000),
+        sender: result.sender,
       });
     }
     return results;

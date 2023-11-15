@@ -4,6 +4,8 @@ interface VaccinProps {
   address: string;
 }
 
+import { showSortAddress } from "@/utils";
+
 import MedicalRecordContract from "@/contracts/MedicalRecordContract";
 import { useModal } from "@/reduxs/use-modal-store";
 
@@ -37,7 +39,7 @@ const VaccinComponents: React.FC<VaccinProps> = ({ address }) => {
   }, [getVaccination]);
 
   return (
-    <div className="shadow-lg shadow-gray-500/50 border-gray-300 border border-1 rounded-[16px] p-4">
+    <div className="shadow-lg shadow-gray-500/50 w-screen border-gray-300 border border-1 rounded-[16px] p-4">
       <div className="px-4 sm:px-0">
         <h3 className="px-4 pt-4 text-base font-semibold leading-7 text-gray-900">
           History Of Vaccination
@@ -72,7 +74,7 @@ const VaccinComponents: React.FC<VaccinProps> = ({ address }) => {
           Thông tin tiêm chủng
         </div>
         <div>
-          <div className="grid grid-cols-3">
+          <div className="grid grid-cols-4">
             <div className="h-12 px-4 text-center align-middle font-medium">
               Loại Vaccin
             </div>
@@ -82,10 +84,21 @@ const VaccinComponents: React.FC<VaccinProps> = ({ address }) => {
             <div className="h-12 px-4 text-center align-middle font-medium">
               Ngày xét nghiệm
             </div>
+            <div className="h-12 px-4 text-center align-middle font-medium">
+              Người Tiêm
+            </div>
           </div>
-          {vaccination?.map((vaccin: VaccinationInfo, i: number) => {
+          {vaccination?.map((vaccin: VaccinationInfo, index: number) => {
             return (
-              <div className="grid grid-cols-3" key={i}>
+              <div
+                className="grid grid-cols-4 hover:cursor-pointer hover:bg-gray-300"
+                key={index}
+                onClick={() =>
+                  onOpen("openVaccinDetailModal", {
+                    address: address,
+                    index: index,
+                  })
+                }>
                 <div className="p-4 align-middle text-center">
                   {vaccin.vaccineType}
                 </div>
@@ -95,12 +108,15 @@ const VaccinComponents: React.FC<VaccinProps> = ({ address }) => {
                 <div className="p-4 align-middle text-center">
                   {vaccin.date.toDateString()}
                 </div>
+                <div className="p-4 align-middle text-center">
+                  {showSortAddress(vaccin.sender)}
+                </div>
               </div>
             );
           })}
           {role && (
             <div
-              className="col-span-3 border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer hover:bg-gray-300"
+              className="col-span-4 border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer hover:bg-gray-300"
               onClick={() =>
                 onOpen("createVaccinRecord", { address: address })
               }>

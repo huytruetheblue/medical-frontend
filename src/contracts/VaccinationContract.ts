@@ -36,6 +36,7 @@ export default class VaccinationContract extends BaseInterface {
         vaccineType: result.vacType,
         vaccineName: result.vacName,
         date: new Date(result.timestamp * 1000),
+        sender: result.sender,
       });
     }
     return results;

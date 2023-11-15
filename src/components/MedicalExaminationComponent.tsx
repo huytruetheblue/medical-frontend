@@ -8,6 +8,7 @@ import MedicalExaminationContract from "@/contracts/MedicalExaminationContract";
 import MedicalRecordContract from "@/contracts/MedicalRecordContract";
 import { useAppSelector } from "@/reduxs/hooks";
 import { useModal } from "@/reduxs/use-modal-store";
+import { showSortAddress } from "@/utils";
 import React from "react";
 
 const MedicalExaminationComponents: React.FC<MedicalExaminationProps> = ({
@@ -79,7 +80,7 @@ const MedicalExaminationComponents: React.FC<MedicalExaminationProps> = ({
           Thông tin khám bệnh
         </div>
         <div>
-          <div className="grid grid-cols-3">
+          <div className="grid grid-cols-4">
             <div className="h-12 px-4 text-center align-middle font-medium">
               Triệu chứng
             </div>
@@ -89,12 +90,15 @@ const MedicalExaminationComponents: React.FC<MedicalExaminationProps> = ({
             <div className="h-12 px-4 text-center align-middle font-medium">
               Ngày khám
             </div>
+            <div className="h-12 px-4 text-center align-middle font-medium">
+              Người khám
+            </div>
           </div>
           {medicalExaminations?.map(
             (medical: MedicalExamination, index: number) => {
               return (
                 <div
-                  className="grid grid-cols-3 hover:cursor-pointer"
+                  className="grid grid-cols-4 hover:cursor-pointer"
                   key={index}
                   onClick={() =>
                     onOpen("openExamDetailModal", {
@@ -110,6 +114,9 @@ const MedicalExaminationComponents: React.FC<MedicalExaminationProps> = ({
                   </div>
                   <div className="p-4 align-middle text-center">
                     {medical.date.toDateString()}
+                  </div>
+                  <div className="p-4 align-middle text-center">
+                    {showSortAddress(medical.sender)}
                   </div>
                 </div>
               );

@@ -8,6 +8,7 @@ import { PatientInfo, TestInfo } from "@/_types_";
 import TestHistoryContract from "@/contracts/TestHistoryContract";
 import MedicalRecordContract from "@/contracts/MedicalRecordContract";
 import { useModal } from "@/reduxs/use-modal-store";
+import { showSortAddress } from "@/utils";
 
 const TestComponents: React.FC<TestProps> = ({ address }) => {
   const { web3Provider, role } = useAppSelector((state) => state.account);
@@ -67,7 +68,7 @@ const TestComponents: React.FC<TestProps> = ({ address }) => {
           Lịch sử Xét nghiệm
         </div>
         <div>
-          <div className="grid grid-cols-3">
+          <div className="grid grid-cols-4">
             <div className="h-12 px-4 text-center align-middle font-medium">
               Tên xét nghiệm
             </div>
@@ -77,10 +78,21 @@ const TestComponents: React.FC<TestProps> = ({ address }) => {
             <div className="h-12 px-4 text-center align-middle font-medium">
               Ngày xét nghiệm
             </div>
+            <div className="h-12 px-4 text-center align-middle font-medium">
+              Người xét nghiệm
+            </div>
           </div>
-          {testHistory?.map((test: TestInfo, i: number) => {
+          {testHistory?.map((test: TestInfo, index: number) => {
             return (
-              <div className="grid grid-cols-3" key={i}>
+              <div
+                className="grid grid-cols-4 hover:cursor-pointer hover:bg-gray-300"
+                key={index}
+                onClick={() =>
+                  onOpen("openTestDetailModal", {
+                    address: address,
+                    index: index,
+                  })
+                }>
                 <div className="p-4 align-middle text-center">
                   {test.testName}
                 </div>
@@ -89,6 +101,9 @@ const TestComponents: React.FC<TestProps> = ({ address }) => {
                 </div>
                 <div className="p-4 align-middle text-center">
                   {test.date.toDateString()}
+                </div>
+                <div className="p-4 align-middle text-center">
+                  {showSortAddress(test.sender)}
                 </div>
               </div>
             );

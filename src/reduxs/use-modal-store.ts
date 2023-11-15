@@ -5,6 +5,8 @@ export type ModalType =
   | "createTestRecord"
   | "createVaccinRecord"
   | "createExaminationRecord"
+  | "openVaccinDetailModal"
+  | "openTestDetailModal"
   | "openExamDetailModal";
 
 interface ModalData {

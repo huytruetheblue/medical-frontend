@@ -6,6 +6,8 @@ import CreateTestRecordModal from "../modal/CreateTestRecordModal";
 import CreateVaccinRecordModal from "../modal/CreateVaccinRecordModal";
 import ViewMedicalExamDetailModal from "../modal/ViewMedicalExamDetailModal";
 import CreateMedicalExamModal from "../modal/CreateMedicalExamModal";
+import ViewVaccinDetailModal from "../modal/ViewVaccinDetailModal";
+import ViewTestDetailModal from "../modal/ViewTestDetailModal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -23,7 +25,9 @@ export const ModalProvider = () => {
       <CreateTestRecordModal />
       <CreateVaccinRecordModal />
       <ViewMedicalExamDetailModal />
+      <ViewTestDetailModal />
       <CreateMedicalExamModal />
+      <ViewVaccinDetailModal />
     </>
   );
 };

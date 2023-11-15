@@ -49,6 +49,7 @@ export default class MedicalRecordContract extends BaseInterface {
       patientBirthday: rs.patientBirthday,
       patientGender: rs.patientGender == 1 ? "Nam" : "Nữ",
       patientNumber: rs.patientNumber,
+      sender: rs.sender,
     };
     return result;
   };

@@ -60,6 +60,7 @@ export default class MedicalExaminationContract extends BaseInterface {
         diagnostic: result.diagnostic,
         prescription: prescriptions,
         date: new Date(result.timestamp * 1000),
+        sender: result.sender,
       });
     }
     return results;
@@ -82,6 +83,7 @@ export default class MedicalExaminationContract extends BaseInterface {
       diagnostic: rs.diagnostic,
       prescription: prescriptions,
       date: new Date(rs.timestamp * 1000),
+      sender: rs.sender,
     };
     return result;
   };
