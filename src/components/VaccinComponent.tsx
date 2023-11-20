@@ -39,7 +39,7 @@ const VaccinComponents: React.FC<VaccinProps> = ({ address }) => {
   }, [getVaccination]);
 
   return (
-    <div className="shadow-lg shadow-gray-500/50 w-screen border-gray-300 border border-1 rounded-[16px] p-4">
+    <div className="shadow-lg shadow-gray-500/50 border-gray-300 border border-1 rounded-[16px] p-4">
       <div className="px-4 sm:px-0">
         <h3 className="px-4 pt-4 text-base font-semibold leading-7 text-gray-900">
           History Of Vaccination
