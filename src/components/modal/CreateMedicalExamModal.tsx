@@ -44,7 +44,7 @@ const formSchema = z.object({
 const CreateMedicalExamModal = () => {
   const router = useRouter();
   const { isOpen, onClose, type, data } = useModal();
-  const { address } = data;
+  const { address, render } = data;
   const { web3Provider, wallet } = useAppSelector((state) => state.account);
 
   const [inputs, setInputs] = React.useState([
@@ -130,6 +130,9 @@ const CreateMedicalExamModal = () => {
         },
       ]);
       router.refresh();
+      if (render) {
+        render();
+      }
       onClose();
     } catch (error) {
       console.log(error);
@@ -163,7 +166,7 @@ const CreateMedicalExamModal = () => {
                 <Input
                   readOnly={true}
                   placeholder="Public Key"
-                  value={address}
+                  value={address ? address.toString() : ""}
                 />
               </FormControl>
               <FormMessage />

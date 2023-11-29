@@ -14,20 +14,25 @@ const TestComponents: React.FC<TestProps> = ({ address }) => {
   const { web3Provider, role } = useAppSelector((state) => state.account);
   const [testHistory, setTestHistory] = React.useState<TestInfo[]>([]);
   const [patientInfo, setPatientInfo] = React.useState<PatientInfo>();
+  const [isRerender, setIsRerender] = React.useState<boolean>(true);
   const { onOpen } = useModal();
   const getTestHistory = React.useCallback(async () => {
-    try {
-      const medicalRecordContract = new MedicalRecordContract(web3Provider);
-      const patient: PatientInfo =
-        await medicalRecordContract.getMedicalRecords(address);
-      setPatientInfo(patient);
-      const testHistoryContract = new TestHistoryContract(web3Provider);
-      const test = await testHistoryContract.getTestHistory(address);
-      setTestHistory(test);
-    } catch (err) {
-      console.log(err);
+    if (isRerender) {
+      try {
+        const medicalRecordContract = new MedicalRecordContract(web3Provider);
+        const patient: PatientInfo =
+          await medicalRecordContract.getMedicalRecords(address);
+        setPatientInfo(patient);
+        const testHistoryContract = new TestHistoryContract(web3Provider);
+        const test = await testHistoryContract.getTestHistory(address);
+        setTestHistory(test);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsRerender(false);
+      }
     }
-  }, [web3Provider]);
+  }, [web3Provider, isRerender]);
 
   React.useEffect(() => {
     getTestHistory();
@@ -111,7 +116,12 @@ const TestComponents: React.FC<TestProps> = ({ address }) => {
           {role && (
             <div
               className="col-span-3 border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer hover:bg-gray-300"
-              onClick={() => onOpen("createTestRecord", { address: address })}>
+              onClick={() =>
+                onOpen("createTestRecord", {
+                  address: address,
+                  render: () => setIsRerender(true),
+                })
+              }>
               <div className="flex text-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

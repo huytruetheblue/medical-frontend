@@ -45,7 +45,7 @@ const CreateVaccinRecordModal = () => {
   const router = useRouter();
   const { isOpen, onClose, type, data } = useModal();
   const { web3Provider, wallet } = useAppSelector((state) => state.account);
-  const { address } = data;
+  const { address, render } = data;
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -71,6 +71,9 @@ const CreateVaccinRecordModal = () => {
 
       form.reset();
       router.refresh();
+      if (render) {
+        render();
+      }
       onClose();
     } catch (error) {
       console.log(error);
@@ -98,7 +101,7 @@ const CreateVaccinRecordModal = () => {
                 <Input
                   readOnly={true}
                   placeholder="Public Key"
-                  value={address}
+                  value={address ? address?.toString() : ""}
                 />
               </FormControl>
               <FormMessage />

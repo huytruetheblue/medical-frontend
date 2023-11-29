@@ -12,6 +12,7 @@ export type ModalType =
 interface ModalData {
   address?: String;
   index?: number;
+  render?: () => void;
 }
 
 interface ModalStore {

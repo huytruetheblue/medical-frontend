@@ -16,23 +16,28 @@ import React from "react";
 const VaccinComponents: React.FC<VaccinProps> = ({ address }) => {
   const { web3Provider, role } = useAppSelector((state) => state.account);
   const [patientInfo, setPatientInfo] = React.useState<PatientInfo>();
+  const [isRerender, setIsRerender] = React.useState<boolean>(true);
 
   const [vaccination, setVaccination] = React.useState<VaccinationInfo[]>([]);
   const { onOpen } = useModal();
 
   const getVaccination = React.useCallback(async () => {
-    try {
-      const medicalRecordContract = new MedicalRecordContract(web3Provider);
-      const patient: PatientInfo =
-        await medicalRecordContract.getMedicalRecords(address);
-      setPatientInfo(patient);
-      const vaccinationContract = new VaccinationContract(web3Provider);
-      const vaccin = await vaccinationContract.getVaccinHistory(address);
-      setVaccination(vaccin);
-    } catch (err) {
-      console.log(err);
+    if (isRerender) {
+      try {
+        const medicalRecordContract = new MedicalRecordContract(web3Provider);
+        const patient: PatientInfo =
+          await medicalRecordContract.getMedicalRecords(address);
+        setPatientInfo(patient);
+        const vaccinationContract = new VaccinationContract(web3Provider);
+        const vaccin = await vaccinationContract.getVaccinHistory(address);
+        setVaccination(vaccin);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsRerender(false);
+      }
     }
-  }, [web3Provider]);
+  }, [web3Provider, isRerender]);
 
   React.useEffect(() => {
     getVaccination();
@@ -118,7 +123,10 @@ const VaccinComponents: React.FC<VaccinProps> = ({ address }) => {
             <div
               className="col-span-4 border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer hover:bg-gray-300"
               onClick={() =>
-                onOpen("createVaccinRecord", { address: address })
+                onOpen("createVaccinRecord", {
+                  address: address,
+                  render: () => setIsRerender(true),
+                })
               }>
               <div className="flex text-center justify-center">
                 <svg

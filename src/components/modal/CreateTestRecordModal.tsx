@@ -44,7 +44,7 @@ const formSchema = z.object({
 const CreateTestRecordModal = () => {
   const router = useRouter();
   const { isOpen, onClose, type, data } = useModal();
-  const { address } = data;
+  const { address, render } = data;
   const { web3Provider, wallet } = useAppSelector((state) => state.account);
 
   const form = useForm({
@@ -71,6 +71,9 @@ const CreateTestRecordModal = () => {
 
       form.reset();
       router.refresh();
+      if (render) {
+        render();
+      }
       onClose();
     } catch (error) {
       console.log(error);
@@ -98,7 +101,7 @@ const CreateTestRecordModal = () => {
                 <Input
                   readOnly={true}
                   placeholder="Public Key"
-                  value={address}
+                  value={address ? address.toString() : ""}
                 />
               </FormControl>
               <FormMessage />

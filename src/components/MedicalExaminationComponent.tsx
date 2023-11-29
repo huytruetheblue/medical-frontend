@@ -19,26 +19,31 @@ const MedicalExaminationComponents: React.FC<MedicalExaminationProps> = ({
   const [medicalExaminations, setMedicalExaminations] =
     React.useState<MedicalExamination[]>();
   const [patientInfo, setPatientInfo] = React.useState<PatientInfo>();
+  const [isRerender, setIsRerender] = React.useState<boolean>(true);
 
   const getMedicalExamination = React.useCallback(async () => {
     if (!web3Provider) {
       return;
     }
-    try {
-      const medicalRecordContract = new MedicalRecordContract(web3Provider);
-      const patient: PatientInfo =
-        await medicalRecordContract.getMedicalRecords(address);
-      setPatientInfo(patient);
-      const medicalExaminationContract = new MedicalExaminationContract(
-        web3Provider
-      );
-      const medicalExaminations =
-        await medicalExaminationContract.getAllMedicalExaminations(address);
-      setMedicalExaminations(medicalExaminations);
-    } catch (err) {
-      console.log(err);
+    if (isRerender) {
+      try {
+        const medicalRecordContract = new MedicalRecordContract(web3Provider);
+        const patient: PatientInfo =
+          await medicalRecordContract.getMedicalRecords(address);
+        setPatientInfo(patient);
+        const medicalExaminationContract = new MedicalExaminationContract(
+          web3Provider
+        );
+        const medicalExaminations =
+          await medicalExaminationContract.getAllMedicalExaminations(address);
+        setMedicalExaminations(medicalExaminations);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsRerender(false);
+      }
     }
-  }, [web3Provider]);
+  }, [web3Provider, isRerender]);
 
   React.useEffect(() => {
     getMedicalExamination();
@@ -126,7 +131,10 @@ const MedicalExaminationComponents: React.FC<MedicalExaminationProps> = ({
             <div
               className="col-span-3 border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer hover:bg-gray-300"
               onClick={() =>
-                onOpen("createExaminationRecord", { address: address })
+                onOpen("createExaminationRecord", {
+                  address: address,
+                  render: () => setIsRerender(true),
+                })
               }>
               <div className="flex text-center justify-center">
                 <svg
