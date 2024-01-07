@@ -103,7 +103,8 @@ const CreateRecordModal = () => {
     },
   });
   const router = useRouter();
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
+  const { render } = data;
 
   const isModalOpen = isOpen && type === "createRecord";
 
@@ -147,6 +148,9 @@ const CreateRecordModal = () => {
 
       form.reset();
       router.refresh();
+      if (render) {
+        render();
+      }
       onClose();
     } catch (error) {
       console.log(error);

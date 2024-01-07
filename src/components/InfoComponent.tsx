@@ -12,27 +12,30 @@ const InfoComponents: React.FC<PatientProps> = ({ address }) => {
   const { web3Provider, role } = useAppSelector((state) => state.account);
   const [addValid, setAddValid] = React.useState<boolean>(false);
   const [patientInfo, setPatientInfo] = React.useState<PatientInfo>();
+  const [isRerender, setIsRerender] = React.useState<boolean>(true);
   const { onOpen } = useModal();
 
   const getPatientInfo = React.useCallback(async () => {
-    if (!web3Provider || !address) {
-      setPatientInfo(undefined);
-      return;
-    }
-    try {
-      const medicalRecordContract = new MedicalRecordContract(web3Provider);
-      const patient: PatientInfo =
-        await medicalRecordContract.getMedicalRecords(address);
-      setPatientInfo(patient);
-      if (patient.patientName === "") {
-        setAddValid(true);
-      } else {
-        setAddValid(false);
+    if (isRerender) {
+      if (!web3Provider || !address) {
+        setPatientInfo(undefined);
+        return;
       }
-    } catch (err) {
-      console.log(err);
+      try {
+        const medicalRecordContract = new MedicalRecordContract(web3Provider);
+        const patient: PatientInfo =
+          await medicalRecordContract.getMedicalRecords(address);
+        setPatientInfo(patient);
+        if (patient.patientName === "") {
+          setAddValid(true);
+        } else {
+          setAddValid(false);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
-  }, [web3Provider, address]);
+  }, [web3Provider, address, isRerender]);
 
   React.useEffect(() => {
     getPatientInfo();
@@ -54,7 +57,9 @@ const InfoComponents: React.FC<PatientProps> = ({ address }) => {
             <div className="flex items-center">
               <div
                 className="flex border-gray-500 border-2 rounded-full p-3 hover:cursor-pointer hover:bg-gray-300"
-                onClick={() => onOpen("createRecord")}>
+                onClick={() =>
+                  onOpen("createRecord", { render: () => setIsRerender(true) })
+                }>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

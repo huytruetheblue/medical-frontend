@@ -35,7 +35,7 @@ const ViewVaccinDetailModal = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [web3Provider]);
+  }, [web3Provider, address, index]);
 
   React.useEffect(() => {
     getPrecriptionDetail();

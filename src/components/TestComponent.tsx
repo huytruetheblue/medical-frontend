@@ -32,7 +32,7 @@ const TestComponents: React.FC<TestProps> = ({ address }) => {
         setIsRerender(false);
       }
     }
-  }, [web3Provider, isRerender]);
+  }, [web3Provider, isRerender, address]);
 
   React.useEffect(() => {
     getTestHistory();
